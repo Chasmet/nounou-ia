@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#1d4ed8">
+  <title>Nounou IA</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="hero">
+  <div>
+    <p>Planning assistante maternelle</p>
+    <h1>Nounou IA</h1>
+    <span id="subtitle">Calendrier, heures, repas, congés et calculs.</span>
+  </div>
+  <button id="installBtn" hidden>Installer</button>
+</header>
+
+<main>
+  <section id="home" class="view active">
+    <div class="card monthbar">
+      <button id="prev">‹</button>
+      <div><small>Mois suivi</small><h2 id="monthTitle"></h2></div>
+      <button id="next">›</button>
+    </div>
+    <div id="stats" class="stats"></div>
+    <div class="card">
+      <h2>Actions rapides</h2>
+      <button id="fillMonth" class="primary">Remplir le mois avec les jours habituels</button>
+      <button id="csv">Exporter CSV</button>
+      <button id="print">Créer PDF / imprimer</button>
+      <p class="hint">Sur téléphone : bouton imprimer puis “Enregistrer en PDF”.</p>
+    </div>
+    <div class="card"><h2>Résumé du mois</h2><div id="summary"></div></div>
+  </section>
+
+  <section id="calendar" class="view">
+    <div class="card">
+      <div class="row"><div><small>Vue annuelle</small><h2 id="yearTitle"></h2></div><select id="yearSelect"></select></div>
+      <div class="legend"><span class="g">Gardé</span><span class="p">Exceptionnel</span><span class="o">Congé</span><span class="r">Absence enfant</span><span class="b">Absence nounou</span></div>
+      <div id="annual" class="annual"></div>
+    </div>
+    <div class="card"><h2 id="monthTitle2"></h2><div id="monthGrid" class="calendar"></div></div>
+  </section>
+
+  <section id="add" class="view">
+    <form id="dayForm" class="card">
+      <h2>Ajouter ou modifier une journée</h2>
+      <label>Date<input id="dayDate" type="date" required></label>
+      <label>Statut<select id="status"><option value="garde">Gardé</option><option value="exceptionnel">Jour exceptionnel</option><option value="conge">Congé</option><option value="absence_enfant">Absence enfant</option><option value="absence_nounou">Absence assistante maternelle</option><option value="non_prevu">Non prévu</option></select></label>
+      <div class="cols"><label>Début<input id="start" type="time" value="08:00"></label><label>Fin<input id="end" type="time" value="17:30"></label></div>
+      <label>Pause en minutes<input id="pause" type="number" min="0" step="5" value="0"></label>
+      <div class="checks"><label><input id="meal" type="checkbox" checked> Repas</label><label><input id="care" type="checkbox" checked> Entretien</label></div>
+      <label>Note<textarea id="note" rows="3"></textarea></label>
+      <button class="primary">Enregistrer</button>
+      <button type="button" id="deleteDay" class="danger">Supprimer ce jour</button>
+    </form>
+  </section>
+
+  <section id="assistant" class="view">
+    <div class="card">
+      <h2>Assistant Nounou</h2>
+      <div id="chat" class="chat"></div>
+      <form id="assistantForm">
+        <textarea id="ask" rows="3" placeholder="Ex : Ajoute demain de 8h à 17h30. Combien je dois payer ce mois-ci ?"></textarea>
+        <button class="primary">Envoyer</button>
+      </form>
+      <p class="hint">V1 : assistant local sans API. Un serveur OpenAI pourra être ajouté ensuite.</p>
+    </div>
+    <div class="card examples">
+      <button>Ajoute demain de 8h à 17h30</button>
+      <button>Warrel absent le 12/06</button>
+      <button>Nounou en congé du 15/07 au 19/07</button>
+      <button>Combien je dois payer ce mois-ci ?</button>
+    </div>
+  </section>
+
+  <section id="settings" class="view">
+    <form id="settingsForm" class="card">
+      <h2>Réglages contrat et tarifs</h2>
+      <label>Prénom enfant<input id="child" value="Warrel"></label>
+      <label>Assistante maternelle<input id="nanny" placeholder="Nom de la nounou"></label>
+      <div class="cols"><label>Tarif horaire net (€)<input id="rate" type="number" step="0.01" value="4.50"></label><label>Entretien / jour (€)<input id="careFee" type="number" step="0.01" value="3.80"></label></div>
+      <div class="cols"><label>Repas / jour (€)<input id="mealFee" type="number" step="0.01" value="4.00"></label><label>Majoration sup. (%)<input id="overtime" type="number" step="1" value="0"></label></div>
+      <div class="cols"><label>Début habituel<input id="defStart" type="time" value="08:00"></label><label>Fin habituelle<input id="defEnd" type="time" value="17:30"></label></div>
+      <fieldset><legend>Jours habituels</legend><label><input name="std" value="1" type="checkbox" checked>Lun</label><label><input name="std" value="2" type="checkbox" checked>Mar</label><label><input name="std" value="3" type="checkbox">Mer</label><label><input name="std" value="4" type="checkbox" checked>Jeu</label><label><input name="std" value="5" type="checkbox" checked>Ven</label><label><input name="std" value="6" type="checkbox">Sam</label><label><input name="std" value="0" type="checkbox">Dim</label></fieldset>
+      <label>URL serveur IA optionnel<input id="endpoint" placeholder="https://mon-serveur.onrender.com/api/nounou"></label>
+      <button class="primary">Sauvegarder</button>
+      <button id="backup" type="button">Exporter sauvegarde</button>
+      <label class="import">Importer sauvegarde<input id="import" type="file" accept="application/json" hidden></label>
+    </form>
+  </section>
+</main>
+
+<nav><button data-v="home" class="active">Accueil</button><button data-v="calendar">Calendrier</button><button data-v="add">Ajouter</button><button data-v="assistant">Assistant</button><button data-v="settings">Réglages</button></nav>
+<div id="toast"></div>
+<section id="printArea"></section>
+<script src="script.js"></script>
+</body>
+</html>
