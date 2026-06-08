@@ -1,18 +1,39 @@
 {
-  "name": "Nounou IA",
+  "id": "/nounou-ia/",
+  "name": "Nounou IA - Planning assistante maternelle",
   "short_name": "Nounou IA",
-  "description": "Planning, calculs et récapitulatif assistante maternelle.",
-  "start_url": "./index.html",
+  "description": "Planning, calculs, absences, congés, repas et récapitulatif assistante maternelle.",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#f3f7fb",
-  "theme_color": "#1d4ed8",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait",
+  "background_color": "#0b1224",
+  "theme_color": "#7c3aed",
   "lang": "fr-FR",
+  "categories": ["productivity", "finance", "utilities"],
   "icons": [
     {
       "src": "assets/icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Ajouter une journée",
+      "short_name": "Ajouter",
+      "description": "Ajouter une journée de garde",
+      "url": "./?action=add",
+      "icons": [{ "src": "assets/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+    },
+    {
+      "name": "Calcul du mois",
+      "short_name": "Calcul",
+      "description": "Voir le montant estimé du mois",
+      "url": "./?action=home",
+      "icons": [{ "src": "assets/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
     }
   ]
 }
